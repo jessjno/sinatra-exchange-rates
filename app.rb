@@ -1,10 +1,10 @@
 require "sinatra"
 require "sinatra/reloader"
-require "http"
-require "json"
+#require "http"
+
 
 get("/") do
-  @raw_response = HTTP.get("https://api.exchangerate.host/list?access_key=#{ENV.fetch("EXCHANGE_RATE_KEY")}")
+  @raw_response = HTTP.get("https://api.exchangerate.host/list?access_key=#{ENV.fetch("EXCHANGE_RATE_KEY").chomp}")
 
   @raw_string = @raw_response.to_s
 
@@ -18,7 +18,7 @@ end
 get("/:from_currency") do
   @from = params.fetch("from_currency")
 
-  api_url = "https://api.exchangerate.host/list?access_key=#{ENV.fetch("EXCHANGE_RATE_KEY")}"
+  api_url = "https://api.exchangerate.host/list?access_key=#{ENV.fetch("EXCHANGE_RATE_KEY").chomp}"
 
   @raw_response = HTTP.get(api_url)
 
